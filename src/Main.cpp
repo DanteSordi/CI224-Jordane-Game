@@ -16,8 +16,6 @@
 #include "Camera.h"
 
 
-  
-
 using namespace std;
 
 #define RUN_GRAPHICS_DISPLAY 0x00;

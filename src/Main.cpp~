@@ -184,7 +184,7 @@ assets.push_back(shared_ptr<CubeAsset> (new CubeAsset(i, -1, 10)));} //dawn
 	//assets.push_back(shared_ptr<Md2Asset> (new Md2Asset(filename)));
 
 	 //Set the camera; control where the camera will be when the player will start the game
-	Camera::getInstance().lookAt(Point3(0.0, 0.0, 10.0), Point3(0.0, 0.0, -1.0), Vector3(0.0, 1.0, 0.0));
+	Camera::getInstance().lookAt(Point3(0.0, 0.0, 10.0), Point3(0.0, 0.0, -1.0), Vector3(0.0, 7.0, 0.0));
 	  Camera::getInstance().setCamera(Camera::getInstance().getCameraM() * Matrix4::translation(Vector3(-10.0, 0.0, 20.0)));
 		display();
         Camera::getInstance().setCamera(Matrix4::identity());
