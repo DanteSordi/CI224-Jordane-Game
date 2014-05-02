@@ -1,0 +1,144 @@
+#include "CubeAsset.h"
+
+CubeAsset::CubeAsset() 
+  : GameAsset(
+	      string("shaders/hello-gl.v.glsl")
+	      , string("shaders/hello-gl.f.glsl")
+	      )
+{
+  CubeAsset(0, 0, 0);
+}
+
+CubeAsset::CubeAsset(float x, float y, float z) {
+  this->li = nullptr;
+
+  // A default "unit" cube
+  num_vertices = 8;
+  num_triangles = 12;
+  g_vertex_buffer_data = new GLfloat[num_vertices * 3]; // three points per vertex
+  g_element_buffer_data = new GLushort[num_triangles * 3]; // three vertices per triangle
+
+  
+  //Vertex Cube
+  g_vertex_buffer_data[0] = -0.5;
+  g_vertex_buffer_data[1] = -0.5;
+  g_vertex_buffer_data[2] = -0.5;
+
+  g_vertex_buffer_data[3] = 0.5;
+  g_vertex_buffer_data[4] = -0.5;
+  g_vertex_buffer_data[5] = -0.5;
+
+  g_vertex_buffer_data[6] = 0.5;
+  g_vertex_buffer_data[7] = 0.5;
+  g_vertex_buffer_data[8] = -0.5;
+
+  g_vertex_buffer_data[9] = -0.5;
+  g_vertex_buffer_data[10] = 0.5;
+  g_vertex_buffer_data[11] = -0.5;
+
+  g_vertex_buffer_data[12] = -0.5;
+  g_vertex_buffer_data[13] = -0.5;
+  g_vertex_buffer_data[14] = 0.5;
+
+  g_vertex_buffer_data[15] = 0.5;
+  g_vertex_buffer_data[16] = -0.5;
+  g_vertex_buffer_data[17] = 0.5;
+
+  g_vertex_buffer_data[18] = 0.5;
+  g_vertex_buffer_data[19] = 0.5;
+  g_vertex_buffer_data[20] = 0.5;
+
+  g_vertex_buffer_data[21] = -0.5;
+  g_vertex_buffer_data[22] = 0.5;
+  g_vertex_buffer_data[23] = 0.5;
+
+
+
+
+             // Cube Faces
+
+  g_element_buffer_data[0] = 0;
+  g_element_buffer_data[1] = 1;
+  g_element_buffer_data[2] = 2;
+
+  g_element_buffer_data[3] = 0;
+  g_element_buffer_data[4] = 2;
+  g_element_buffer_data[5] = 3;
+
+  g_element_buffer_data[6] = 1;
+  g_element_buffer_data[7] = 5;
+  g_element_buffer_data[8] = 6;
+
+  g_element_buffer_data[9] = 1;
+  g_element_buffer_data[10] = 6;
+  g_element_buffer_data[11] = 2;
+  
+  g_element_buffer_data[12] = 5;
+  g_element_buffer_data[13] = 4;
+  g_element_buffer_data[14] = 7;
+
+  g_element_buffer_data[15] = 5;
+  g_element_buffer_data[16] = 7;
+  g_element_buffer_data[17] = 6;
+
+  g_element_buffer_data[18] = 4;
+  g_element_buffer_data[19] = 0;
+  g_element_buffer_data[20] = 3;
+
+  g_element_buffer_data[21] = 4;
+  g_element_buffer_data[22] = 3;
+  g_element_buffer_data[23] = 7;
+
+  g_element_buffer_data[24] = 0;
+  g_element_buffer_data[25] = 1;
+  g_element_buffer_data[26] = 5;
+
+  g_element_buffer_data[27] = 0;
+  g_element_buffer_data[28] = 5;
+  g_element_buffer_data[29] = 4;
+  
+  g_element_buffer_data[30] = 3;
+  g_element_buffer_data[31] = 2;
+  g_element_buffer_data[32] = 6;
+
+  g_element_buffer_data[33] = 3;
+  g_element_buffer_data[34] = 6;
+  g_element_buffer_data[35] = 7;
+
+
+
+  bbox.reset();
+  bbox = shared_ptr<BoundingBox>(new BoundingBox(Point3(x, y, z), 1.0, 1.0, 1.0));
+
+  make_resources();
+}
+
+CubeAsset::~CubeAsset() {
+
+
+
+
+
+
+
+  // TODO: do something nice here.
+}
+
+void CubeAsset::update() {
+  if (nullptr != li) {
+    //    std::cout << "x: " << bbox->getCentre()->getX() << "\ty: " << bbox->getCentre()->getY() << "\tz:" << bbox->getCentre()->getZ() << std::endl;
+    shared_ptr<Point3> p = shared_ptr<Point3>(new Point3(this->li->update()));
+
+    bbox.reset();
+    bbox = shared_ptr<BoundingBox>(new BoundingBox(*p, 1.0, 1.0, 1.0));
+  }
+}
+
+void CubeAsset::setInterpolator(shared_ptr<IInterpolator> li) {
+  this->li.swap(li);
+}
+
+void CubeAsset::draw() {
+//  std::cout << "x: " << bbox->getCentre()->getX() << "\ty: " << bbox->getCentre()->getY() << "\tz:" << bbox->getCentre()->getZ() << std::endl;
+  GameAsset::draw();
+}
